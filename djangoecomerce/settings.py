@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'comments.apps.CommentsConfig'  ,
-    'products.apps.ProductsConfig'
+    'comments.apps.CommentsConfig',
+    'products.apps.ProductsConfig',
+    'accounts.apps.AccountsConfig'
 ]
 
 MIDDLEWARE = [
@@ -115,6 +116,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Podemos especficar a donde queremos que vaya despues de logearse
+LOGIN_REDIRECT_URL = 'home'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/

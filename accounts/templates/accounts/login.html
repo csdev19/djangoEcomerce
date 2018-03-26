@@ -1,0 +1,26 @@
+
+{% extends 'products/base.html' %}
+{% load staticfiles %}
+{% block css %}
+  <link href="{% static "css/style.css" %}" rel="stylesheet">
+{% endblock css%}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col"></div>
+            <div class="col">
+                <br>
+                <h2>Login</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <p><button type="submit">Login</button></p>
+                </form>
+
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
