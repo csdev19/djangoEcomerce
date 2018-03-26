@@ -1,0 +1,2 @@
+# djangoEcomerce
+Test django-ecomerce
