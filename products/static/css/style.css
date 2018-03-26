@@ -15,3 +15,9 @@ body {
 .pagination {
     margin-bottom: 30px;
 }
+
+
+.content {
+    /* margin: 100px; */
+    padding: 50px;
+}
