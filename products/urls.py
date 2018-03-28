@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.urls import path
-from . import views
+from products.views import HomeView, ProductDetailView
+
 
 urlpatterns = [
-    path('', views.test, name="home") ,
+    path('', HomeView.as_view(), name="home") ,
+    path('products/<slug:slug>', ProductDetailView.as_view(), name="detail") ,
 ]
