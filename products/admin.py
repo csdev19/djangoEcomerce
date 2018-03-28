@@ -1,10 +1,10 @@
 from django.contrib import admin
-from products.models import Product, ProductImage
+from products.models import Product, ProductImage, ProductCategory
 
 
 # para este sitio 
-# user123
-# admin123
+# |                     user123                     |
+# |                     admin123                    |
 
 class ProductImageInLine(admin.TabularInline):
     model = ProductImage
@@ -21,3 +21,4 @@ class ProductAdmin(admin.ModelAdmin):
 
 # Registramos 
 admin.site.register(Product, ProductAdmin)
+admin.site.register(ProductCategory)

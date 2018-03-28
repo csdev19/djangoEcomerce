@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 from products.models import Product
 
 
@@ -15,3 +15,8 @@ class HomeView (TemplateView):
         products = Product.objects.all()
         return {'products':products}
     
+class ProductDetailView (DetailView):
+    model = Product
+    # template_name = 'products/product_detail.html '
+    # no es necesario porque un detailview busca un archivo con el sufijo _detail 
+
