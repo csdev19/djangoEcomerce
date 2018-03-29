@@ -1,0 +1,23 @@
+{% extends "products/base.html" %}
+{% load staticfiles %}
+{% block css %}
+  <link href="{% static "css/3-col-portfolio.css" %}" rel="stylesheet">
+{% endblock%}
+
+{% block content %}
+<div class="container">
+
+<div class="row">
+  <div class="col-xs-12 col-md-12 m-3">
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading">Payment failed</h4>
+      <p>Sorry, something happened with the payment to {{product.title}}</p>
+      <p>{{error_message}}</p>
+      <hr>
+    </div>
+    <a href="/"><button type="button" class="btn btn-primary", name="button">Volver</button></a>
+  </div>
+
+</div>
+</div>
+{% endblock %}

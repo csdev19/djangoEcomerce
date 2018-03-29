@@ -125,3 +125,8 @@ LOGIN_REDIRECT_URL = 'home'
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# 
+STRIPE_API_KEY = 'sk_test_gQgIu9yG2fN3WkEMyl6Z8fuH'
+
+STRIPE_PUBLIC_API_KEY = 'pk_test_4O81Yh4Z4e1wOIDuaHY7Pwjq'

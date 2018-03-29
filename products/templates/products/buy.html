@@ -1,0 +1,120 @@
+{% extends "products/base.html" %}
+{% load staticfiles %}
+{% block css %}
+<link href="{% static "css/style.css" %}" rel="stylesheet">
+
+<style type="text/css">
+#product-image {
+  max-width: 350px;
+}
+
+.row {
+  padding-top: 100px;
+}
+</style>
+
+{% endblock %}
+{% block content %}
+<br>  
+<br>
+<br>
+<script src="https://js.stripe.com/v3/"></script>
+<div class="container">
+
+  <div class="row p-3">
+		<div class="col-xs-2 m-3 card"><img id="product-image" class="img-responsive" src="{{product.images.first.image.url}}">
+		</div>
+		<div class="col-xs-4 m-3">
+			<h4 class="product-name"><strong>{{object.title}}</strong></h4><h4><small>{{object.description}}</small></h4>
+		</div>
+	</div>
+<div class="row p-2 ">
+  <div class="col-xs-12 col-md-6">
+  <form action="." method="post" id="payment-form">
+    {% csrf_token %}
+
+    <h2>Payment Data</h2>
+    <br>
+    <div id="card-element">
+      <!-- a Stripe Element will be inserted here. -->
+    </div>
+    <div id="card-errors" role="alert"></div>
+    <br>
+    <button type="submit" class="btn btn-success">Buy</button>
+  </form>
+
+  </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+var stripe = Stripe('pk_test_4O81Yh4Z4e1wOIDuaHY7Pwjq');
+var elements = stripe.elements();
+
+
+
+var style = {
+  base: {
+    color: '#32325d',
+    lineHeight: '18px',
+    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    fontSmoothing: 'antialiased',
+    fontSize: '20px',
+    '::placeholder': {
+      color: '#aab7c4'
+    }
+  },
+  invalid: {
+    color: '#fa755a',
+    iconColor: '#fa755a'
+  }
+};
+// Create an instance of the card Element
+var card = elements.create('card', {style: style});
+
+// Add an instance of the card Element into the `card-element` <div>
+card.mount('#card-element');
+
+card.addEventListener('change', function(event) {
+  var displayError = document.getElementById('card-errors');
+  if (event.error) {
+    displayError.textContent = event.error.message;
+  } else {
+    displayError.textContent = '';
+  }
+});
+
+
+function stripeTokenHandler(token) {
+  console.log(token);
+  // // Insert the token ID into the form so it gets submitted to the server
+  var form = document.getElementById('payment-form');
+  var hiddenInput = document.createElement('input');
+  hiddenInput.setAttribute('type', 'hidden');
+  hiddenInput.setAttribute('name', 'stripeToken');
+  hiddenInput.setAttribute('value', token.id);
+  form.appendChild(hiddenInput);
+
+  // Submit the form
+  form.submit();
+}
+// Create a token or display an error when the form is submitted.
+var form = document.getElementById('payment-form');
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  stripe.createToken(card).then(function(result) {
+    if (result.error) {
+      // Inform the customer that there was an error
+      var errorElement = document.getElementById('card-errors');
+      errorElement.textContent = result.error.message;
+    } else {
+      // Send the token to your server
+      // console.log(result.token);
+      stripeTokenHandler(result.token);
+    }
+  });
+});
+</script>
+{% endblock content %}

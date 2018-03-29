@@ -101,7 +101,7 @@
         <h5 class="card-header">Pricing</h5>
         <div class="card-body">
           Only ${{product.price}}
-          <a href=" url "buy" slug=product.slug "><button type="button" class="btn btn-success">Buy</button></a>
+          <a href="{% url "buy" slug=product.slug %}"><button type="button" class="btn btn-success">Buy</button></a>
         </div>
       </div>
 
