@@ -1,5 +1,5 @@
 from django.db import models
-from django.conf  import settings
+from django.conf import settings
 
 # Create your models here.
 class Comment(models.Model):
@@ -10,6 +10,11 @@ class Comment(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='comments'
+    )
+    product = models.ForeignKey(
+        'products.Product',
+        related_name='comments', 
+        on_delete=models.CASCADE
     )
 
     def __str__ (self):

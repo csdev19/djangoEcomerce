@@ -39,7 +39,7 @@
       <div class="card my-4">
         <h5 class="card-header">Leave a Comment:</h5>
         <div class="card-body">
-          <form method="post" action=" url "comments:createcomment"">
+          <form method="post" action="{% url "comments:createcomment"%}">
             {% csrf_token %}
             <div class="form-group">
               <textarea name="{{comment_form.content.name}}" class="form-control" rows="3"></textarea>

@@ -23,5 +23,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('products.urls')),
-    path('accounts/', include('accounts.urls', namespace="accounts" ))
+    path('accounts/', include('accounts.urls', namespace="accounts" )),
+    path('comments/', include('comments.urls', namespace="comments" )),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT, show_indexes=True)
