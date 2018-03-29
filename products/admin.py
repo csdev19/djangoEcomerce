@@ -1,5 +1,8 @@
 from django.contrib import admin
-from products.models import Product, ProductImage, ProductCategory
+from products.models import (
+    Product, ProductImage, 
+    ProductCategory, LogBuy
+)
 
 
 # para este sitio 
@@ -22,3 +25,4 @@ class ProductAdmin(admin.ModelAdmin):
 # Registramos 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductCategory)
+admin.site.register(LogBuy)

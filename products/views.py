@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, DetailView
-from products.models import Product
+from products.models import Product, LogBuy
 from comments.forms import CommentForm
 from django.conf import settings
 import stripe
@@ -37,13 +37,34 @@ class ProductBuyView(DetailView):
         stripe.api_key = settings.STRIPE_API_KEY
         token = request.POST['stripeToken']
         product = self.get_object()
+        error_message =  None
 
-        charge = stripe.Charge.create(
-            amount=product.price,
-            currency='usd',
-            description='cobro por {}'.format(product.title),
-            statement_descriptor='cobro es obligatorio',
-            source=token
-        )
+        try:
+            charge = stripe.Charge.create(
+                amount=product.price,
+                currency='usd',
+                description='cobro por {}'.format(product.title),
+                statement_descriptor='cobro es obligatorio',
+                source=token
+            )
+
+        except stripe.error.CardError as e:
+            body= e.json_body
+            err = body['error']
+            error_message = err['message']
+
+        except stripe.error.StripeError as e:
+            error_message = 'cant process your payment please try again later'
+
+        if error_message:
+            return render(request, 'products/failed.html', {'error_message':error_message, 'product':product})
+
+        buyer = None
+
+        if request.user.is_authenticated:
+            buyer = request.user
+
+        LogBuy.objects.create(product=product, user=buyer)
 
         return render(request, 'products/success.html', {'debug_info':charge, 'product':product})
+    

@@ -1,6 +1,7 @@
 from django.db import models
 # from django.core.urlresolvers import reverse
 from django.urls import reverse
+from django.conf import settings
 
 # Create your models here.
 class Product(models.Model):
@@ -38,4 +39,19 @@ class ProductCategory(models.Model):
 
     def __str__ (self):
         return self.name
+
+class LogBuy(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    product = models.ForeignKey(
+        'products.Product',
+        on_delete=models.CASCADE,
+    )    
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        null=True, blank=True
+    )
+    
+    def __str__(self):
+        return 'product {} buyed'.format(self.product)
 
